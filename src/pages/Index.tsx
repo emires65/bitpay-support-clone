@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X, MessageCircle, Phone, Mail, Clock, Users, CheckCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -9,62 +8,69 @@ const Index = () => {
 
   // Function to trigger JivoChat widget
   const openJivoChat = () => {
-    console.log('Attempting to open JivoChat...');
+    console.log('Opening JivoChat widget...');
     
-    // First, try the JivoChat API
-    if (window.jivo_api) {
-      console.log('Using jivo_api.open()');
-      window.jivo_api.open();
-      return;
-    }
-
-    // Try to find and click the JivoChat widget with multiple selectors
-    const selectors = [
-      '[data-jivo]',
-      '#jivo-iframe-container',
-      '.ji-chat-button',
-      '.jivo-chat-button',
-      '.jivo_chat_widget',
-      'iframe[src*="jivosite.com"]',
-      '[class*="jivo"]',
-      '[id*="jivo"]'
-    ];
-
-    for (const selector of selectors) {
-      const jivoWidget = document.querySelector(selector);
-      if (jivoWidget) {
-        console.log(`Found JivoChat widget with selector: ${selector}`);
-        (jivoWidget as HTMLElement).click();
+    // Wait a moment for JivoChat to be ready
+    setTimeout(() => {
+      // Try the JivoChat API first
+      if (window.jivo_api && typeof window.jivo_api.open === 'function') {
+        console.log('Using jivo_api.open()');
+        window.jivo_api.open();
         return;
       }
-    }
 
-    // If still not found, try to initialize JivoChat manually
-    if (typeof window.jivo_init === 'function') {
-      console.log('Initializing JivoChat manually');
-      window.jivo_init();
-      return;
-    }
+      // Try to find and click the JivoChat button
+      const jivoSelectors = [
+        '#jivo-iframe-container',
+        '.jivo_chat_widget',
+        '.jivo-chat-button',
+        '[data-jivo]',
+        'iframe[src*="jivosite.com"]',
+        '.ji-chat-button',
+        '[class*="jivo"]'
+      ];
 
-    // Last resort - open a support URL or show an alert
-    console.log('JivoChat widget not found, opening fallback');
-    window.open('mailto:support@bitpay.com', '_blank');
+      for (const selector of jivoSelectors) {
+        const jivoElement = document.querySelector(selector);
+        if (jivoElement) {
+          console.log(`Found JivoChat element with selector: ${selector}`);
+          if (jivoElement.tagName === 'IFRAME') {
+            // For iframe, try to trigger the parent container
+            const parent = jivoElement.parentElement;
+            if (parent) parent.click();
+          } else {
+            jivoElement.click();
+          }
+          return;
+        }
+      }
+
+      // If widget is not visible, try to show it programmatically
+      if (window.jivo_api && typeof window.jivo_api.showWidget === 'function') {
+        console.log('Using jivo_api.showWidget()');
+        window.jivo_api.showWidget();
+        return;
+      }
+
+      console.log('JivoChat widget not found or not ready');
+    }, 500);
   };
 
-  // Wait for JivoChat to load
+  // Initialize JivoChat when component mounts
   useEffect(() => {
-    const checkJivoChat = () => {
-      if (window.jivo_api || document.querySelector('[data-jivo]') || document.querySelector('#jivo-iframe-container')) {
-        console.log('JivoChat is ready');
+    const initJivoChat = () => {
+      // Check if JivoChat is loaded
+      if (window.jivo_api) {
+        console.log('JivoChat API is ready');
         return;
       }
       
-      // Check again after a short delay
-      setTimeout(checkJivoChat, 1000);
+      // Retry after a delay
+      setTimeout(initJivoChat, 1000);
     };
 
     // Start checking after component mounts
-    setTimeout(checkJivoChat, 2000);
+    setTimeout(initJivoChat, 2000);
   }, []);
 
   return (
@@ -374,8 +380,10 @@ declare global {
     jivo_api?: {
       open: () => void;
       close: () => void;
+      showWidget?: () => void;
+      setCustomData?: (data: any) => void;
     };
-    jivo_init?: () => void;
+    jivo_onLoadCallback?: () => void;
   }
 }
 

@@ -22,7 +22,26 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- JivoChat Widget -->
-    <script src="https://app.jivosite.com/simulate_widget.html?code_host=code.jivosite.com&locale=en&site=lucasjim041-gmail.com-site&widget_id=AR5F7qTtTB" async></script>
+    <!-- JivoChat Widget with Blue Theme -->
+    <script>
+    (function(){ var widget_id = 'AR5F7qTtTB';var d=document;var w=window;function l(){var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);}if(d.readyState=='complete'){l();}else{if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+    </script>
+    
+    <!-- JivoChat Theme Customization -->
+    <script>
+      window.jivo_onLoadCallback = function() {
+        if (window.jivo_api) {
+          // Customize chat widget appearance
+          window.jivo_api.setCustomData({
+            theme_color: '#2563eb', // Blue theme
+            widget_style: {
+              primary_color: '#2563eb',
+              text_color: '#ffffff',
+              background_color: '#ffffff'
+            }
+          });
+        }
+      };
+    </script>
   </body>
 </html>
