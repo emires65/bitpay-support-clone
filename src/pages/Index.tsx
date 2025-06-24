@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Menu, X, MessageCircle, Phone, Mail, Clock, Users, CheckCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -37,9 +38,11 @@ const Index = () => {
           if (jivoElement.tagName === 'IFRAME') {
             // For iframe, try to trigger the parent container
             const parent = jivoElement.parentElement;
-            if (parent) parent.click();
+            if (parent && 'click' in parent) {
+              (parent as HTMLElement).click();
+            }
           } else {
-            jivoElement.click();
+            (jivoElement as HTMLElement).click();
           }
           return;
         }
@@ -82,17 +85,17 @@ const Index = () => {
             {/* Logo */}
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="text-3xl font-bold text-[#1a472a]">BitPay</div>
+                <div className="text-3xl font-bold text-blue-600">BitPay</div>
               </div>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
-                <a href="#support" className="text-gray-700 hover:text-[#1a472a] px-3 py-2 text-sm font-medium transition-colors">Support Center</a>
-                <a href="#help" className="text-gray-700 hover:text-[#1a472a] px-3 py-2 text-sm font-medium transition-colors">Help Docs</a>
-                <a href="#contact" className="text-gray-700 hover:text-[#1a472a] px-3 py-2 text-sm font-medium transition-colors">Contact</a>
-                <a href="#faq" className="text-gray-700 hover:text-[#1a472a] px-3 py-2 text-sm font-medium transition-colors">FAQ</a>
+                <a href="#support" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Support Center</a>
+                <a href="#help" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Help Docs</a>
+                <a href="#contact" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Contact</a>
+                <a href="#faq" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">FAQ</a>
               </div>
             </div>
 
@@ -100,7 +103,7 @@ const Index = () => {
             <div className="hidden md:block">
               <Button 
                 onClick={openJivoChat}
-                className="bg-[#1a472a] hover:bg-[#2d5a3d] text-white px-6 py-2 rounded-lg font-medium"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium"
               >
                 <MessageCircle className="mr-2" size={16} />
                 Customer Support
@@ -111,7 +114,7 @@ const Index = () => {
             <div className="md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-700 hover:text-[#1a472a] p-2"
+                className="text-gray-700 hover:text-blue-600 p-2"
               >
                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -123,13 +126,13 @@ const Index = () => {
         {mobileMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-              <a href="#support" className="text-gray-700 hover:text-[#1a472a] block px-3 py-2 text-base font-medium">Support Center</a>
-              <a href="#help" className="text-gray-700 hover:text-[#1a472a] block px-3 py-2 text-base font-medium">Help Docs</a>
-              <a href="#contact" className="text-gray-700 hover:text-[#1a472a] block px-3 py-2 text-base font-medium">Contact</a>
-              <a href="#faq" className="text-gray-700 hover:text-[#1a472a] block px-3 py-2 text-base font-medium">FAQ</a>
+              <a href="#support" className="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">Support Center</a>
+              <a href="#help" className="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">Help Docs</a>
+              <a href="#contact" className="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">Contact</a>
+              <a href="#faq" className="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">FAQ</a>
               <Button 
                 onClick={openJivoChat}
-                className="bg-[#1a472a] hover:bg-[#2d5a3d] text-white mx-3 mt-2 rounded-lg font-medium w-full"
+                className="bg-blue-600 hover:bg-blue-700 text-white mx-3 mt-2 rounded-lg font-medium w-full"
               >
                 <MessageCircle className="mr-2" size={16} />
                 Customer Support
@@ -140,26 +143,26 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1a472a] via-[#2d5a3d] to-[#0f2419] text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1a472a]/10 to-[#2d5a3d]/10"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-blue-700/10"></div>
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 Get BitPay
-                <span className="block text-[#4ade80]">Customer Support</span>
+                <span className="block text-blue-300">Customer Support</span>
                 when you need it
               </h1>
-              <p className="text-xl text-green-100 leading-relaxed max-w-lg">
+              <p className="text-xl text-blue-100 leading-relaxed max-w-lg">
                 BitPay's dedicated support team is here to help with payments, settlements, technical issues, and account questions.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
                   onClick={openJivoChat}
-                  className="bg-[#4ade80] hover:bg-[#22c55e] text-[#1a472a] px-8 py-4 text-lg font-semibold rounded-lg"
+                  className="bg-blue-300 hover:bg-blue-200 text-blue-800 px-8 py-4 text-lg font-semibold rounded-lg"
                 >
                   <MessageCircle className="mr-2" size={20} />
                   Chat with Support
@@ -168,7 +171,7 @@ const Index = () => {
                   size="lg" 
                   variant="outline" 
                   onClick={openJivoChat}
-                  className="border-green-300 text-green-200 hover:bg-[#1a472a]/80 px-8 py-4 text-lg font-semibold rounded-lg"
+                  className="border-blue-300 text-blue-200 hover:bg-blue-600/80 px-8 py-4 text-lg font-semibold rounded-lg"
                 >
                   <Phone className="mr-2" size={20} />
                   Contact Support
@@ -176,7 +179,7 @@ const Index = () => {
               </div>
             </div>
             <div className="relative">
-              <div className="bg-gradient-to-br from-[#2d5a3d] to-[#1a472a] rounded-xl p-8 shadow-2xl border border-green-700">
+              <div className="bg-gradient-to-br from-blue-700 to-blue-600 rounded-xl p-8 shadow-2xl border border-blue-500">
                 <div className="bg-white rounded-lg p-6 text-gray-800">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -190,19 +193,19 @@ const Index = () => {
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
                         <span className="font-medium">Active Support Tickets</span>
-                        <span className="text-[#1a472a] font-bold">12</span>
+                        <span className="text-blue-600 font-bold">12</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="font-medium">Avg Response Time</span>
-                        <span className="text-green-600 font-bold">under 1 hour</span>
+                        <span className="text-blue-600 font-bold">under 1 hour</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="font-medium">Customer Satisfaction</span>
-                        <span className="text-[#1a472a] font-bold">99.2%</span>
+                        <span className="text-blue-600 font-bold">99.2%</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="font-medium">Support Agents Online</span>
-                        <span className="text-green-600 font-bold">8 agents</span>
+                        <span className="text-blue-600 font-bold">8 agents</span>
                       </div>
                     </div>
                   </div>
@@ -227,8 +230,8 @@ const Index = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card className="p-8 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <MessageCircle className="text-[#1a472a]" size={32} />
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <MessageCircle className="text-blue-600" size={32} />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Live Chat Support</h3>
               <p className="text-gray-600 mb-6">
@@ -236,15 +239,15 @@ const Index = () => {
               </p>
               <Button 
                 onClick={openJivoChat}
-                className="bg-[#1a472a] hover:bg-[#2d5a3d] text-white rounded-lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
               >
                 Start Chat
               </Button>
             </Card>
 
             <Card className="p-8 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Phone className="text-[#1a472a]" size={32} />
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Phone className="text-blue-600" size={32} />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Direct Support</h3>
               <p className="text-gray-600 mb-6">
@@ -253,15 +256,15 @@ const Index = () => {
               <Button 
                 variant="outline" 
                 onClick={openJivoChat}
-                className="border-[#1a472a] text-[#1a472a] hover:bg-green-50 rounded-lg"
+                className="border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg"
               >
                 Contact Now
               </Button>
             </Card>
 
             <Card className="p-8 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Clock className="text-[#1a472a]" size={32} />
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Clock className="text-blue-600" size={32} />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">24/7 Availability</h3>
               <p className="text-gray-600 mb-6">
@@ -270,7 +273,7 @@ const Index = () => {
               <Button 
                 variant="outline" 
                 onClick={openJivoChat}
-                className="border-[#1a472a] text-[#1a472a] hover:bg-green-50 rounded-lg"
+                className="border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg"
               >
                 Get Support
               </Button>
@@ -280,28 +283,28 @@ const Index = () => {
       </section>
 
       {/* Support Stats */}
-      <section className="py-20 bg-[#1a472a] text-white">
+      <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Support That Works</h2>
-            <p className="text-xl text-green-200">Trusted by merchants worldwide</p>
+            <p className="text-xl text-blue-200">Trusted by merchants worldwide</p>
           </div>
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl md:text-5xl font-bold text-[#4ade80] mb-2">under 1hr</div>
-              <div className="text-lg text-green-200">Average Response</div>
+              <div className="text-4xl md:text-5xl font-bold text-blue-300 mb-2">under 1hr</div>
+              <div className="text-lg text-blue-200">Average Response</div>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold text-[#4ade80] mb-2">24/7</div>
-              <div className="text-lg text-green-200">Live Support Available</div>
+              <div className="text-4xl md:text-5xl font-bold text-blue-300 mb-2">24/7</div>
+              <div className="text-lg text-blue-200">Live Support Available</div>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold text-[#4ade80] mb-2">99.2%</div>
-              <div className="text-lg text-green-200">Satisfaction Rate</div>
+              <div className="text-4xl md:text-5xl font-bold text-blue-300 mb-2">99.2%</div>
+              <div className="text-lg text-blue-200">Satisfaction Rate</div>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold text-[#4ade80] mb-2">50K+</div>
-              <div className="text-lg text-green-200">Merchants Helped</div>
+              <div className="text-4xl md:text-5xl font-bold text-blue-300 mb-2">50K+</div>
+              <div className="text-lg text-blue-200">Merchants Helped</div>
             </div>
           </div>
         </div>
@@ -319,7 +322,7 @@ const Index = () => {
           <Button 
             size="lg" 
             onClick={openJivoChat}
-            className="bg-[#1a472a] hover:bg-[#2d5a3d] text-white px-8 py-4 text-lg font-semibold rounded-lg"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-lg"
           >
             <MessageCircle className="mr-2" size={20} />
             Contact Support Now
@@ -328,18 +331,18 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1a472a] text-white">
+      <footer className="bg-blue-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="text-2xl font-bold text-[#4ade80] mb-4">BitPay</div>
-              <p className="text-green-200">
+              <div className="text-2xl font-bold text-blue-300 mb-4">BitPay</div>
+              <p className="text-blue-200">
                 The world's leading crypto payment processor. Get support for all your merchant needs.
               </p>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-green-200">
+              <ul className="space-y-2 text-blue-200">
                 <li><button onClick={openJivoChat} className="hover:text-white transition-colors cursor-pointer">Help Center</button></li>
                 <li><button onClick={openJivoChat} className="hover:text-white transition-colors cursor-pointer">Contact Support</button></li>
                 <li><button onClick={openJivoChat} className="hover:text-white transition-colors cursor-pointer">Live Chat</button></li>
@@ -348,7 +351,7 @@ const Index = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Resources</h3>
-              <ul className="space-y-2 text-green-200">
+              <ul className="space-y-2 text-blue-200">
                 <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">API Reference</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Status Page</a></li>
@@ -357,7 +360,7 @@ const Index = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-green-200">
+              <ul className="space-y-2 text-blue-200">
                 <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Press</a></li>
@@ -365,7 +368,7 @@ const Index = () => {
               </ul>
             </div>
           </div>
-          <div className="border-t border-green-800 mt-8 pt-8 text-center text-green-200">
+          <div className="border-t border-blue-500 mt-8 pt-8 text-center text-blue-200">
             <p>&copy; 2024 BitPay, Inc. All rights reserved.</p>
           </div>
         </div>
